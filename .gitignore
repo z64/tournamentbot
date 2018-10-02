@@ -1,0 +1,7 @@
+*.lock
+bin/
+lib/discordcr
+lib/discordcr-middleware
+lib/discordcr-plugin
+lib/rate_limiter
+*.sha1

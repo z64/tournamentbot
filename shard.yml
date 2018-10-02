@@ -1,0 +1,17 @@
+name: tournamentbot
+version: 0.1.0
+
+dependencies:
+  discordcr:
+    github: meew0/discordcr
+    branch: master
+  discordcr-middleware:
+    github: z64/discordcr-middleware
+    branch: master
+  discordcr-plugin:
+    github: z64/discordcr-plugin
+license: MIT
+
+targets:
+  tournamentbot:
+    main: src/tournamentbot.cr
