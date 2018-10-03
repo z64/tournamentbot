@@ -1,5 +1,4 @@
 require "yaml"
-require "../tournaments/*"
 
 module TournamentBot::TournamentCreator
   @[Discord::Plugin::Options(middleware: DiscordMiddleware::Prefix.new("!"))]
