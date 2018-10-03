@@ -16,8 +16,7 @@ module TournamentBot
     delegate stop, to: client
 
     def initialize
-      "puts initialized"
-      @client = Discord::Client.new(token: "Bot MzY2MjQ1MTQ3NjczMTAwMjg4.DosR0g.v4ayRZiLy2qhYk_Cy1U1M_3c0PU", client_id: 366245147673100288_u64)
+      @client = Discord::Client.new(token: "Bot #{AUTH["token"].as_s}", client_id: CLIENT_ID)
       @cache = Discord::Cache.new(@client)
       @client.cache = @cache
       register_plugins
@@ -28,7 +27,6 @@ module TournamentBot
     end
   end
 
-  OWNER_ID = 94558130305765376
 
   def self.run
     bot = Bot.new
@@ -36,7 +34,9 @@ module TournamentBot
   end
 end
 
-CLIENT_ID = 352983229063757825.to_u64
+AUTH = YAML.parse(File.open("./src/config.yml"))
+OWNER_ID = AUTH["owner"].as_i.to_u64
+CLIENT_ID = AUTH["client_id"].as_i.to_u64
 
 Dir.mkdir("./tournaments") unless Dir.exists?("./tournaments")
 TournamentBot.run
