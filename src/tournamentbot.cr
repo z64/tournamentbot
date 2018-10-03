@@ -12,8 +12,7 @@ module TournamentBot
   class Bot
     getter client : Discord::Client
     getter cache : Discord::Cache
-    delegate run,  to: client
-    delegate stop, to: client
+    delegate run, stop, to: client
 
     def initialize
       @client = Discord::Client.new(token: "Bot #{AUTH["token"].as_s}", client_id: CLIENT_ID)
