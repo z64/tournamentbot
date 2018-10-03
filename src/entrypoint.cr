@@ -1,3 +1,4 @@
 require "./tournamentbot"
 
-TournamentBot.run
+config = TournamentBot::Config.load("./src/config.yml")
+TournamentBot.run(config)
