@@ -1,5 +1,5 @@
 # Checks if a command was called in a guild (as opposed to a DM channel.)
-class GuildChecker
+class TournamentBot::GuildChecker
   class Result
     getter id : UInt64
 
@@ -7,7 +7,7 @@ class GuildChecker
     end
   end
 
-  def call (payload, context)
+  def call(payload, context)
     client = context[Discord::Client]
     guild = client.cache.try &.resolve_channel(payload.channel_id).guild_id
     if guild

@@ -1,5 +1,5 @@
 # Checks if a certain amount of mentions are present in a message.
-class MentionChecker
+class TournamentBot::MentionChecker
   getter min_mentions : Int32?
   getter max_mentions : Int32?
 
@@ -7,7 +7,7 @@ class MentionChecker
   end
 
   # Checks if a command was called in a guild (as opposed to a DM channel.)
-  def call (payload : Discord::Message, context)
+  def call(payload, context)
     min_mentions, max_mentions = @min_mentions, @max_mentions
 
     if min_mentions && payload.mentions.size < min_mentions

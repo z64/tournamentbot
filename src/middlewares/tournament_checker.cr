@@ -6,7 +6,7 @@ class TournamentChecker
   end
 
   def call (payload : Discord::Message, context)
-    guild = context[GuildChecker::Result].id
+    guild = context[TournamentBot::GuildChecker::Result].id
 
     if @tournaments[guild]?
       yield

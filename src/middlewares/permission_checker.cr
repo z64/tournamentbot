@@ -8,7 +8,7 @@ class PermissionChecker
 
   def call(payload : Discord::Message, context)
     client = context[Discord::Client]
-    tournament = @tournaments[context[GuildChecker::Result].id]
+    tournament = @tournaments[context[TournamentBot::GuildChecker::Result].id]
     user_id = payload.author.id.to_u64
     has_permission = true
 
