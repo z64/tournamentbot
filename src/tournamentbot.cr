@@ -26,7 +26,7 @@ module TournamentBot
     end
   end
 
-  AUTH      = YAML.parse(File.open("./src/config.yml"))
+  AUTH      = YAML.parse(File.read("./src/config.yml"))
   OWNER_ID  = AUTH["owner"].as_i.to_u64
   CLIENT_ID = AUTH["client_id"].as_i.to_u64
 
