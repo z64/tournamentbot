@@ -12,8 +12,7 @@ module TournamentBot
   class Bot
     getter client : Discord::Client
     getter cache : Discord::Cache
-    delegate run,  to: client
-    delegate stop, to: client
+    delegate run, stop, to: client
 
     def initialize
       @client = Discord::Client.new(token: "Bot #{AUTH["token"].as_s}", client_id: CLIENT_ID)
@@ -27,16 +26,15 @@ module TournamentBot
     end
   end
 
+  AUTH      = YAML.parse(File.read("./src/config.yml"))
+  OWNER_ID  = AUTH["owner"].as_i.to_u64
+  CLIENT_ID = AUTH["client_id"].as_i.to_u64
 
   def self.run
     bot = Bot.new
     bot.run
   end
 end
-
-AUTH = YAML.parse(File.open("./src/config.yml"))
-OWNER_ID = AUTH["owner"].as_i.to_u64
-CLIENT_ID = AUTH["client_id"].as_i.to_u64
 
 Dir.mkdir("./tournaments") unless Dir.exists?("./tournaments")
 TournamentBot.run

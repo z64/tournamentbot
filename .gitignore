@@ -1,9 +1,6 @@
-*.lock
 bin/
-lib/discordcr
-lib/discordcr-middleware
-lib/discordcr-plugin
-lib/rate_limiter
+lib/
+.shards/
 *.sha1
 tournament-files/
 config.yml
