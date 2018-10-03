@@ -1,12 +1,15 @@
 class ArgumentChecker
+  class Result
+    getter args : Array(String)
+
+    def initialize(@args : Array(String))
+    end
+  end
+
   getter min_args : Int32?
   getter max_args : Int32?
-  getter args     : Array(String)
 
-  def initialize(min_args : Int32? = nil, max_args : Int32? = nil)
-    @min_args = min_args
-    @max_args = max_args
-    @args     = Array(String).new
+  def initialize(@min_args : Int32? = nil, @max_args : Int32? = nil)
   end
 
   def call(payload : Discord::Message, context)
@@ -23,7 +26,7 @@ class ArgumentChecker
     elsif max_args && args.size > max_args
       client.create_message(payload.channel_id, "You can't call this command with more than #{max_args} argument(s).")
     else
-      @args = args
+      context.put(Result.new(args))
       yield
     end
   end

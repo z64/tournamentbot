@@ -3,14 +3,12 @@ class PermissionChecker
   getter permission : Permission
   getter tournaments : Hash(UInt64, Tournament)
 
-  def initialize(tournaments : Hash(UInt64, Tournament), permission : Permission)
-    @permission  = permission
-    @tournaments = tournaments
+  def initialize(@tournaments : Hash(UInt64, Tournament), @permission : Permission)
   end
 
   def call(payload : Discord::Message, context)
     client = context[Discord::Client]
-    tournament = @tournaments[context[GuildChecker].guild]
+    tournament = @tournaments[context[GuildChecker::Result].id]
     user_id = payload.author.id.to_u64
     has_permission = true
 

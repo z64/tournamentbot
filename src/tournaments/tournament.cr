@@ -91,7 +91,7 @@ class Tournament
       embed.footer = Discord::EmbedFooter.new(text: "This tournament has already started, you can not sign up for it any longer.")
       embed.colour = 0xFF0000
 
-      fields << Discord::EmbedField.new(name: "Current match:")
+      fields << Discord::EmbedField.new(name: "Current match:", value: @current_match)
     else
       embed.footer = Discord::EmbedFooter.new(text: "This tournament hasn't started yet. Join it by typing \"!join\"!")
       embed.colour = 0x00FF00

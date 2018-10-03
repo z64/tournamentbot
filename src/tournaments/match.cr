@@ -1,6 +1,7 @@
 class Match
+  include YAML::Serializable
 
-  def initialize(args)
+  def initialize(*args)
 
   end
 end

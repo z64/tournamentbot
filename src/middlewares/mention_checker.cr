@@ -3,9 +3,7 @@ class MentionChecker
   getter min_mentions : Int32?
   getter max_mentions : Int32?
 
-  def initialize(min_mentions : Int32? = nil, max_mentions : Int32? = nil)
-    @min_mentions = min_mentions
-    @max_mentions = max_mentions
+  def initialize(@min_mentions : Int32? = nil, @max_mentions : Int32? = nil)
   end
 
   # Checks if a command was called in a guild (as opposed to a DM channel.)

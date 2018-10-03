@@ -2,12 +2,11 @@
 class TournamentChecker
   getter tournaments : Hash(UInt64, Tournament)
 
-  def initialize(tournaments : Hash(UInt64, Tournament))
-    @tournaments = tournaments
+  def initialize(@tournaments : Hash(UInt64, Tournament))
   end
 
   def call (payload : Discord::Message, context)
-    guild = context[GuildChecker].guild
+    guild = context[GuildChecker::Result].id
 
     if @tournaments[guild]?
       yield

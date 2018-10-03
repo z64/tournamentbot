@@ -1,5 +1,5 @@
 require "yaml"
-require "../../lib/tournaments/*"
+require "../tournaments/*"
 
 module TournamentBot::TournamentCreator
   @[Discord::Plugin::Options(middleware: DiscordMiddleware::Prefix.new("!"))]
@@ -22,9 +22,9 @@ module TournamentBot::TournamentCreator
       }
     )]
     def create(payload, ctx)
-      name = ctx[ArgumentChecker].args.join(" ")
+      name = ctx[ArgumentChecker::Result].args.join(" ")
       author = payload.author.id.to_u64
-      guild = ctx[GuildChecker].guild
+      guild = ctx[GuildChecker::Result].id
 
       if @tournaments[guild]?
         client.create_message(payload.channel_id, "There is already a tournament being ran on this server. More than that is currently not supported.")
@@ -50,7 +50,7 @@ module TournamentBot::TournamentCreator
       }
     )]
     def tournament(payload, ctx)
-      guild = ctx[GuildChecker].guild
+      guild = ctx[GuildChecker::Result].id
 
       client.create_message(payload.channel_id,"", @tournaments[guild].to_embed(client.cache))
     end
@@ -65,7 +65,7 @@ module TournamentBot::TournamentCreator
       }
     )]
     def delete(payload, ctx)
-      guild = ctx[GuildChecker].guild
+      guild = ctx[GuildChecker::Result].id
 
       name = @tournaments[guild].name
       File.delete("./tournaments/#{guild}.yml")
@@ -85,7 +85,7 @@ module TournamentBot::TournamentCreator
       }
     )]
     def add_host(payload, ctx)
-      guild = ctx[GuildChecker].guild
+      guild = ctx[GuildChecker::Result].id
 
       hosts = Array(String).new
 
@@ -114,7 +114,7 @@ module TournamentBot::TournamentCreator
       }
     )]
     def remove_host(payload, ctx)
-      guild = ctx[GuildChecker].guild
+      guild = ctx[GuildChecker::Result].id
 
       hosts = Array(String).new
 
@@ -148,7 +148,7 @@ module TournamentBot::TournamentCreator
       }
     )]
     def add_volunteer(payload, ctx)
-      guild = ctx[GuildChecker].guild
+      guild = ctx[GuildChecker::Result].id
 
       volunteers = Array(String).new
 
@@ -177,7 +177,7 @@ module TournamentBot::TournamentCreator
       }
     )]
     def remove_volunteer(payload, ctx)
-      guild = ctx[GuildChecker].guild
+      guild = ctx[GuildChecker::Result].id
 
       volunteers = Array(String).new
 
@@ -206,7 +206,7 @@ module TournamentBot::TournamentCreator
       }
     )]
     def add_commentator(payload, ctx)
-      guild = ctx[GuildChecker].guild
+      guild = ctx[GuildChecker::Result].id
 
       commentators = Array(String).new
 
@@ -235,7 +235,7 @@ module TournamentBot::TournamentCreator
       }
     )]
     def remove_commentator(payload, ctx)
-      guild = ctx[GuildChecker].guild
+      guild = ctx[GuildChecker::Result].id
 
       commentators = Array(String).new
 
@@ -263,7 +263,7 @@ module TournamentBot::TournamentCreator
       }
     )]
     def join(payload, ctx)
-      guild = ctx[GuildChecker].guild
+      guild = ctx[GuildChecker::Result].id
       if @tournaments[guild].started
         client.create_message(payload.channel_id, "The tournament *#{@tournaments[guild].name}* has already started, so you can't join it anymore.")
         return
@@ -284,7 +284,7 @@ module TournamentBot::TournamentCreator
       }
     )]
     def leave(payload, ctx)
-      guild = ctx[GuildChecker].guild
+      guild = ctx[GuildChecker::Result].id
       if @tournaments[guild].started
         client.create_message(payload.channel_id, "The tournament *#{@tournaments[guild].name}* has already started, so you can't leave it anymore.")
         return
@@ -306,8 +306,8 @@ module TournamentBot::TournamentCreator
       }
     )]
     def set_bracket(payload, ctx)
-      guild = ctx[GuildChecker].guild
-      bracket = ctx[ArgumentChecker].args.join(" ")
+      guild = ctx[GuildChecker::Result].id
+      bracket = ctx[ArgumentChecker::Result].args.join(" ")
 
       @tournaments[guild].bracket = "See the bracket at #{bracket}."
       save(@tournaments[guild])
@@ -326,8 +326,8 @@ module TournamentBot::TournamentCreator
       }
     )]
     def set_game(payload, ctx)
-      guild = ctx[GuildChecker].guild
-      game = ctx[ArgumentChecker].args.join(" ")
+      guild = ctx[GuildChecker::Result].id
+      game = ctx[ArgumentChecker::Result].args.join(" ")
 
       @tournaments[guild].game = game
       save(@tournaments[guild])
@@ -346,8 +346,8 @@ module TournamentBot::TournamentCreator
       }
     )]
     def set_name(payload, ctx)
-      guild = ctx[GuildChecker].guild
-      name = ctx[ArgumentChecker].args.join(" ")
+      guild = ctx[GuildChecker::Result].id
+      name = ctx[ArgumentChecker::Result].args.join(" ")
 
       @tournaments[guild].name = name
       save(@tournaments[guild])
@@ -365,7 +365,7 @@ module TournamentBot::TournamentCreator
       }
     )]
     def start(payload, ctx)
-      guild = ctx[GuildChecker].guild
+      guild = ctx[GuildChecker::Result].id
 
       if @tournaments[guild].started
         client.create_message(payload.channel_id, "The tournament *#{@tournaments[guild].name}* has already started.")
@@ -387,7 +387,7 @@ module TournamentBot::TournamentCreator
     end
 
     private def save(tournament : Tournament)
-      File.open("./tournaments/#{tournament.guild}.yml", "w") { |f| tournament.to_yaml(f) }
+      File.open("./tournament-files/#{tournament.guild}.yml", "w") { |f| tournament.to_yaml(f) }
     end
   end
 end
