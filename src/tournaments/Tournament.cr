@@ -77,7 +77,7 @@ class Tournament
     commentators = resolve_users(commentators, cache)
     participants = resolve_participants(cache)
 
-    fields = Array(Discord::EmbedField).new(4)
+    fields = Array(Discord::EmbedField).new
     fields << Discord::EmbedField.new(name: "Hosts", value: hosts, inline: true) if hosts
     fields << Discord::EmbedField.new(name: "Volunteers", value: volunteers, inline: true) if volunteers
     fields << Discord::EmbedField.new(name: "Commentators", value: commentators, inline: true) if commentators
@@ -86,17 +86,25 @@ class Tournament
     embed.author      = Discord::EmbedAuthor.new(name: "#{creator.username} presents:", icon_url: creator.avatar_url)
     embed.title       = "__#{@name}__ (#{@game})"
     embed.description = @bracket
-    embed.fields      = fields
 
     if @started
       embed.footer = Discord::EmbedFooter.new(text: "This tournament has already started, you can not sign up for it any longer.")
       embed.colour = 0xFF0000
+
+      fields << Discord::EmbedField.new(name: "Current match:")
     else
       embed.footer = Discord::EmbedFooter.new(text: "This tournament hasn't started yet. Join it by typing \"!join\"!")
       embed.colour = 0x00FF00
     end
 
+    embed.fields = fields
     embed
+  end
+
+  def advance_match
+    @current_match = @next_match
+    @next_match = @matches[0]?.to_s
+    @matches.delete(@matches[0]?)
   end
 
   private def resolve_users(users : Array(UInt64), cache : Discord::Cache) : String?

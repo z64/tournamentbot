@@ -6,6 +6,7 @@ require "discordcr-middleware/middleware/prefix"
 
 require "./plugins/*"
 require "./middlewares/*"
+require "./tournaments/*"
 
 module TournamentBot
   class Bot
