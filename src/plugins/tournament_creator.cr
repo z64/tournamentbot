@@ -377,12 +377,12 @@ module TournamentBot::TournamentCreator
     end
 
     private def load_tournaments
-      dir = Dir.open("./tournaments")
+      dir = Dir.open("./tournament-files")
 
       dir.each do |name|
         next if name =~ /^\.\.?$/
         guild_id = name.split(".").first
-        @tournaments[guild_id.to_u64] = Tournament.from_yaml(File.read("./tournaments/#{name}"))
+        @tournaments[guild_id.to_u64] = Tournament.from_yaml(File.read("./tournament-files/#{name}"))
       end
     end
 
