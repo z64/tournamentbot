@@ -5,3 +5,5 @@ lib/discordcr-middleware
 lib/discordcr-plugin
 lib/rate_limiter
 *.sha1
+tournament-files/
+config.yml
