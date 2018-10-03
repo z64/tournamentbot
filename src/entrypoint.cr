@@ -1,0 +1,3 @@
+require "./tournamentbot"
+
+TournamentBot.run

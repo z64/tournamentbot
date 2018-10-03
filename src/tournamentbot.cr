@@ -36,5 +36,4 @@ module TournamentBot
   end
 end
 
-Dir.mkdir("./tournaments") unless Dir.exists?("./tournaments")
-TournamentBot.run
+Dir.mkdir_p("./tournaments")
