@@ -4,6 +4,8 @@ require "discordcr-plugin"
 require "discordcr-middleware"
 require "discordcr-middleware/middleware/prefix"
 
+Dir.mkdir_p("./tournament-files")
+
 require "./config"
 require "./plugins/*"
 require "./middlewares/*"
@@ -36,5 +38,3 @@ module TournamentBot
     bot.run
   end
 end
-
-Dir.mkdir_p("./tournaments")
